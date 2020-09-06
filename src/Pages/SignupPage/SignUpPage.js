@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
-import { makeStyles, TextField, FormControl, Button, CssBaseline, Box, Container } from '@material-ui/core';
+import Header from '../../Components/Header/Header';
+import { makeStyles, TextField, Box, Container } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { signUpReducer } from '../../Redux/User/authSign';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        marginTop: "20px",
 
-        marginLeft: "500px"
+
+        // marginLeft: "500px"s
+        display: "flex",
+        flexDirection: "column"
 
     },
     textField: {
@@ -24,61 +30,86 @@ const SignUpPage = () => {
     const [password, setPassword] = useState("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
+    const dispatch = useDispatch()
+    const auth = useSelector(state => state.auth)
+    // const registerDetails = (e) => {
+    //     e.preventDefault();
+    //     const user = {
+    //         firstName, lastName, email, password
+    //     }
+    //     dispatch(signUpReducer(user))
+    // }
 
+    const registerDetails = (e) => {
+        e.preventDefault()
+        const user = {
+            firstName, lastName, email, password
+        }
+        // dispatch(signUpReducer(user))
+        dispatch(signUpReducer(user))
+    }
+    if (auth.authenticated) {
+        return <Redirect to="/" />
+
+    }
     return (
         <>
-            <CssBaseline />
+            <Header />
+
+
             <Container >
+
                 <Box >
-                    <FormControl className={classes.root} >
+                    <form onSubmit={registerDetails}
+                        className={classes.root}>
                         <TextField
                             className={classes.textField}
-                            id="firstname;"
                             label="First Name"
-                            placeholder="Enter the First Name"
-                            type="text"
+                            name="firstname"
+                            placeholder="First Name"
                             value={firstName}
+                            type="text"
                             variant='outlined'
                             onChange={(e) => setFirstName(e.target.value)}
                         />
                         <TextField
                             className={classes.textField}
-                            id="Last Name;"
+                            name="last name"
                             label="Last Name"
-                            placeholder="Enter the Last Name"
-                            type="text"
+                            placeholder="Last Name"
                             value={lastName}
+                            type="text"
                             variant='outlined'
                             onChange={(e) => setLastName(e.target.value)}
                         />
                         <TextField
                             className={classes.textField}
-                            id="email;"
-                            label="Email"
-                            placeholder="Enter the email"
-                            type="text"
-                            value={email}
+                            label='Email'
                             variant='outlined'
+                            name="email"
+                            placeholder="email"
+                            value={email}
+                            type="text"
                             onChange={(e) => setEmail(e.target.value)}
                         />
+
                         <TextField
                             className={classes.textField}
-                            type="password"
-                            id="password"
                             label="Password"
-                            value={password}
-                            placeholder="Enter the Password"
+                            name="password"
                             variant='outlined'
-
+                            placeholder="Password"
+                            value={password}
+                            type="password"
                             onChange={(e) => setPassword(e.target.value)}
-                        //   onChange={}
-
                         />
-                        <Button ClassName={classes.butoon} color="primary" variant="contained" >
-                            Login
-                </Button>
-                    </FormControl>
+                        <button className={classes.butoon}  >
+                            Signup
+                    </button>
+                    </form>
+
                 </Box>
+
             </Container>
 
 
