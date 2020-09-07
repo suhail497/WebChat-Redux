@@ -4,5 +4,6 @@ export const authActionTypes = {
 }
 
 export const userActionTypes = {
-    REALTIMEUSER: 'REALTIMEUSER'
+    REALTIMEUSER: 'REALTIMEUSER',
+    GET_REALTIME_MESSAGES: 'GET_REALTIME_MESSAGES'
 }

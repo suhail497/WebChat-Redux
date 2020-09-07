@@ -34,7 +34,6 @@ const LoginPage = () => {
         }
         if (password == "") {
             alert("Password is Required")
-
             return
         }
 

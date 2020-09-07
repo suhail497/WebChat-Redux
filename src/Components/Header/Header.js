@@ -54,11 +54,11 @@ const useStyles = makeStyles(theme => ({
 const Header = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
-    // const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(0);
 
-    // const handleChange = (event, newValue) => {
-    //     setValue(newValue);
-    // }
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    }
 
     const auth = useSelector(state => state.auth)
     return (
@@ -74,7 +74,8 @@ const Header = () => {
 
                             {
                                 (!auth.authenticated) ?
-                                    (<Tabs className={classes.tabs} >
+                                    (<Tabs className={classes.tabs} value={value} onChange={handleChange}
+                                        indicatorColor="primary" >
                                         <Tab label="login" component={Link} to="/login" />
                                         <Tab label="signup" component={Link} to="/signup" />
                                     </Tabs>) : null
@@ -89,7 +90,7 @@ const Header = () => {
 
                             {
                                 auth.authenticated ? <Link to={'#'} onClick={() => {
-                                    dispatch(isLoggedOut())
+                                    dispatch(isLoggedOut(auth.uid))
                                 }}>Logout</Link> : null
                             }
 
